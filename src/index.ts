@@ -1,19 +1,17 @@
-import { Codegen } from "./codegen";
-import { Enviornment } from "./enviornment";
-import { Parser } from "./parser";
-import { createWriteStream, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
-import { analyzeExpression } from "./dependencyAnalysis";
-import { checkFunction } from "./typeChecker";
-import { FunctionType } from "./function";
-import { killIfShould } from "./error";
-import { inspect } from "util";
+import { Codegen } from "./codegen.ts";
+import { Enviornment } from "./enviornment.ts";
+import { Parser } from "./parser.ts";
+import { join } from "https://deno.land/std@0.172.0/path/mod.ts";
+import { analyzeExpression } from "./dependencyAnalysis.ts";
+import { checkFunction } from "./typeChecker.ts";
+import { FunctionType } from "./function.ts";
+import { killIfShould } from "./error.ts";
 
 console.log("⚛ Creating enviornment");
 const enviornment = new Enviornment();
 
 console.log("📖 Parsing");
-enviornment.importFile(join(__dirname, "demo.functi"), {
+enviornment.importFile(join(new URL('', import.meta.url).pathname, "demo.functi"), {
 	code: "",
 	location: 0,
 });
@@ -54,7 +52,7 @@ for (const fn in enviornment.functions) {
 killIfShould();
 
 console.log("✏ Codegen");
-const codegen = new Codegen(createWriteStream(join(__dirname, "output.js")));
+const codegen = new Codegen(await Deno.open(join(new URL('', import.meta.url).pathname, "output.js")));
 
 for (const dependency of enviornment.functions.main.body.dependencies) {
 	codegen.writeFunction(dependency);
