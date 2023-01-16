@@ -1,0 +1,1 @@
+function anonFunction$t(){ return print$j(function (n){ returnn})}function print$j(str){ return corecat$e(str)}function corecat$e($str){console.log($str)}function main$u(){ return anonFunction$t()}main$u()
