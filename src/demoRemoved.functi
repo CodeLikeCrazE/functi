@@ -1,0 +1,3 @@
+function syntaxError => +
+function error => + 'yes' 'no'
+function addStringFromInput string a => + a 32

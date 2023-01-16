@@ -1,0 +1,25 @@
+{
+  "name": "functi",
+  "displayName": "functi",
+  "description": "Official Language Support for Functi",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "functi",
+      "aliases": ["Functi", "functi"],
+      "extensions": [".functi"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "functi",
+      "scopeName": "source.functi",
+      "path": "./syntaxes/functi.tmLanguage.json"
+    }]
+  }
+}

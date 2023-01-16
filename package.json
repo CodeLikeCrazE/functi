@@ -1,0 +1,18 @@
+{
+	"name": "functi",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon ./src/index.ts",
+		"start": "ts-node ./src/index.ts && node ./src/output.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"chalk": "^5.2.0",
+		"nodemon": "^2.0.20",
+		"ts-node": "^10.9.1"
+	}
+}

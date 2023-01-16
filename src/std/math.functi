@@ -1,0 +1,4 @@
+function + number a number b => core/add a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b

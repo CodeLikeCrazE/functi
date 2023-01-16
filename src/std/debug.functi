@@ -1,0 +1,1 @@
+function print any str => core/cat str

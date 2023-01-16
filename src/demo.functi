@@ -1,0 +1,7 @@
+import 'std@debug'
+import 'std@math'
+import './demoCore.functi'
+
+function hello => print 'Hello World!'
+function anonFunction => print anon number n => n
+function main => anonFunction

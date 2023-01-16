@@ -1,0 +1,2 @@
+function recursive => recursive
+function test => print / 32 4
