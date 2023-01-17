@@ -1,5 +1,5 @@
-import { Expression, ExpressionType } from "./expression";
-import { FunctionType } from "./function";
+import { Expression, ExpressionType } from "./expression.ts";
+import { FunctionType } from "./function.ts";
 
 export function analyzeExpression(expr: Expression) {
 	switch (expr.type) {

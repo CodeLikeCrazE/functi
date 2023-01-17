@@ -1,27 +1,36 @@
-import { Stream, Writable } from "stream";
-import { Enviornment } from "./enviornment";
-import { Expression, ExpressionType } from "./expression";
-import { FunctiFunction, FunctionType, NativeFunctionType } from "./function";
+import { Expression, ExpressionType } from "./expression.ts";
+import {
+	FunctiFunction,
+	FunctionType,
+	NativeFunctionType,
+} from "./function.ts";
 
 export class Codegen {
-	public output: Writable;
+	public output: Deno.FsFile;
 	public genIds: Record<string, string> = {};
 
 	public get inverseGenIdMappings() {
-		const out:Record<string,string> = {};
+		const out: Record<string, string> = {};
 		for (const i in this.genIds) {
 			out[this.genIds[i]] = i;
 		}
 		return out;
 	}
 
-	constructor(output: Writable) {
+	constructor(output: Deno.FsFile) {
 		this.output = output;
 	}
 
-	random(baseId:string) {
+	random(baseId: string) {
 		const availableChars = "abcdefghijklmnopqrstuvwxyz";
-		let output = Array.from(baseId).filter(char => 'abcdefghijklmnopqrstuvwxyz$123456790ABCDEFGHIJKLMNOPQRSTUVWXYZ'.includes(char)).join("") + "$";
+		let output =
+			Array.from(baseId)
+				.filter((char) =>
+					"abcdefghijklmnopqrstuvwxyz$123456790ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(
+						char
+					)
+				)
+				.join("") + "$";
 		do {
 			output +=
 				availableChars[
@@ -38,51 +47,64 @@ export class Codegen {
 		return this.genIds[str];
 	}
 
+	write(str:string) {
+		this.output.writeSync(new Uint8Array(Array.from(str).map(s => s.charCodeAt(0))));
+	}
+
 	writeMainCall() {
-		this.output.write(`${this.id('main')}()`);
+		this.write(`${this.id("main")}()`);
 	}
 
 	writeFunction(func: FunctiFunction) {
 		switch (func.type) {
 			case FunctionType.Custom:
-				//TODO: WRITE ARGS
-				this.output.write(`function ${this.id(func.name)}(`);
-				let isFirst = true;
-				for (const arg of func.args) {
-					if (!isFirst) {
-						this.output.write(",");
+				{
+					this.write(`function ${this.id(func.name)}(`);
+					let isFirst = true;
+					for (const arg of func.args) {
+						if (!isFirst) {
+							this.write(",");
+						}
+						this.write(arg.name);
+						isFirst = false;
 					}
-					this.output.write(arg.name);
-					isFirst = false;
+					this.write(`){ return `);
+					this.writeExpression(func.body);
+					this.write(`}`);
 				}
-				this.output.write(`){ return `);
-				this.writeExpression(func.body);
-				this.output.write(`}`);
 				return;
 			case FunctionType.Native:
 				switch (func.native) {
 					case NativeFunctionType.Add:
-						this.output.write(
-							`function ${this.id(func.name)}($a,$b){return $a + $b}`
+						this.write(
+							`function ${this.id(
+								func.name
+							)}($a,$b){return $a + $b}`
 						);
 						break;
 					case NativeFunctionType.Sub:
-						this.output.write(
-							`function ${this.id(func.name)}($a,$b){return $a - $b}`
+						this.write(
+							`function ${this.id(
+								func.name
+							)}($a,$b){return $a - $b}`
 						);
 						break;
 					case NativeFunctionType.Mul:
-						this.output.write(
-							`function ${this.id(func.name)}($a,$b){return $a * $b}`
+						this.write(
+							`function ${this.id(
+								func.name
+							)}($a,$b){return $a * $b}`
 						);
 						break;
 					case NativeFunctionType.Div:
-						this.output.write(
-							`function ${this.id(func.name)}($a,$b){return $a / $b}`
+						this.write(
+							`function ${this.id(
+								func.name
+							)}($a,$b){return $a / $b}`
 						);
 						break;
 					case NativeFunctionType.Cat:
-						this.output.write(
+						this.write(
 							`function ${this.id(
 								func.name
 							)}($str){console.log($str)}`
@@ -96,46 +118,45 @@ export class Codegen {
 		switch (expr.type) {
 			case ExpressionType.Function:
 				{
-					this.output.write(`${this.id(expr.function.name)}(`);
+					this.write(`${this.id(expr.function.name)}(`);
 					let isFirst = true;
 					for (const subExpr of expr.args) {
 						if (!isFirst) {
-							this.output.write(",");
+							this.write(",");
 						}
 						this.writeExpression(subExpr);
 						isFirst = false;
 					}
-					this.output.write(")");
+					this.write(")");
 				}
 				return;
 			case ExpressionType.Number:
-				this.output.write(expr.value.toString());
+				this.write(expr.value.toString());
 				return;
 			case ExpressionType.Variable:
-				this.output.write(expr.name);
+				this.write(expr.name);
 				return;
 			case ExpressionType.String:
-				this.output.write(JSON.stringify(expr.value));
+				this.write(JSON.stringify(expr.value));
 				return;
 			case ExpressionType.Relocated:
 				this.writeExpression(expr.base);
 				return;
-			case ExpressionType.AnonymousFunctionDeclaration:
-				{
-					this.output.write(`function (`);
-					let isFirst = true;
-					for (const subExpr of expr.args) {
-						if (!isFirst) {
-							this.output.write(",");
-						}
-						this.output.write(subExpr.name);
-						isFirst = false;
+			case ExpressionType.AnonymousFunctionDeclaration: {
+				this.write(`function (`);
+				let isFirst = true;
+				for (const subExpr of expr.args) {
+					if (!isFirst) {
+						this.write(",");
 					}
-					this.output.write('){ return');
-					this.writeExpression(expr.body);
-					this.output.write('}');
-					return;
+					this.write(subExpr.name);
+					isFirst = false;
 				}
+				this.write("){ return");
+				this.writeExpression(expr.body);
+				this.write("}");
+				return;
+			}
 			default:
 				console.log(expr);
 		}

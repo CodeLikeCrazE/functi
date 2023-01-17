@@ -1,15 +1,15 @@
-import { delayedError, error } from "./error";
-import { Expression, ExpressionType } from "./expression";
-import { FunctiFunction, FunctionType, NativeFunctionType } from "./function";
-import { Type, TypeType } from "./type";
+import { delayedError, error } from "./error.ts";
+import { Expression, ExpressionType } from "./expression.ts";
+import { FunctiFunction, FunctionType, NativeFunctionType } from "./function.ts";
+import { Type, TypeType } from "./type.ts";
 
-export function checkFunction(fn:FunctiFunction) {
+export function checkFunction(fn: FunctiFunction) {
 	if (fn.type == FunctionType.Custom) {
-		const scope: Record<string,Type> = {};
+		const scope: Record<string, Type> = {};
 		for (const arg of fn.args) {
 			scope[arg.name] = arg.type;
 		}
-		checkExpression(fn.body,scope);
+		checkExpression(fn.body, scope);
 	}
 }
 
@@ -36,7 +36,7 @@ export function checkExpression(
 	}
 }
 
-export function typeName(type: Type):string {
+export function typeName(type: Type): string {
 	switch (type.type) {
 		case TypeType.Any:
 			return "any";
@@ -53,7 +53,9 @@ export function typeName(type: Type):string {
 		case TypeType.Array:
 			return `[${typeName(type.subType)}]`;
 		case TypeType.Function:
-			return `Function ${type.args.map(typeName).join(", ")} => ${typeName(type.returnType)}`;
+			return `Function ${type.args
+				.map(typeName)
+				.join(", ")} => ${typeName(type.returnType)}`;
 	}
 }
 
@@ -100,30 +102,53 @@ export function getReturnType(
 						return {
 							type: TypeType.Null,
 						} as Type;
-					case NativeFunctionType.Call:
-						const func = getReturnType(expression.args[0],scopeVars);
+					case NativeFunctionType.Call: {
+						const func = getReturnType(
+							expression.args[0],
+							scopeVars
+						);
 						if (func.type != TypeType.Function) {
-							delayedError(expression.location,"Call expects a function");
+							delayedError(
+								expression.location,
+								"Call expects a function"
+							);
 							return {
-								type:TypeType.Null
+								type: TypeType.Null,
 							};
 						}
-						let inArgs = expression.args.map(arg => getReturnType(arg,scopeVars));
+						let inArgs = expression.args.map((arg) =>
+							getReturnType(arg, scopeVars)
+						);
 						let funcArgs = func.args;
 						if (inArgs.length != funcArgs.length) {
-							delayedError(expression.location,"Args length mismatch");
+							delayedError(
+								expression.location,
+								"Args length mismatch"
+							);
 						}
 						for (let i = 0; i < inArgs.length; i++) {
-							if (!canCast(inArgs[i],funcArgs[i])) {
-								delayedError(expression.args[i].location,"Arg type mismatch");
+							if (!canCast(inArgs[i], funcArgs[i])) {
+								delayedError(
+									expression.args[i].location,
+									"Arg type mismatch"
+								);
 							}
 						}
-						
+
 						return func.returnType;
+					}
 				}
+			} else if (expression.function.type == FunctionType.Partial) {
+				error(
+					expression.location,
+					`Cannot type-check anonymous function (${expression.function.name})`
+				);
+				return {
+					type:TypeType.Null
+				};
 			}
 			return getReturnType(expression.function.body, scopeVars);
-		case ExpressionType.Variable:
+		case ExpressionType.Variable: {
 			const varValue = scopeVars[expression.name];
 			if (!varValue) {
 				error(
@@ -132,6 +157,7 @@ export function getReturnType(
 				);
 			}
 			return varValue;
+		}
 		case ExpressionType.Number:
 			return {
 				type: TypeType.Number,
@@ -141,16 +167,17 @@ export function getReturnType(
 				type: TypeType.String,
 			} as Type;
 		case ExpressionType.Relocated:
-			return getReturnType(expression.base,scopeVars);
-		case ExpressionType.AnonymousFunctionDeclaration:
+			return getReturnType(expression.base, scopeVars);
+		case ExpressionType.AnonymousFunctionDeclaration: {
 			const newScope = structuredClone(scopeVars);
 			for (const arg of expression.args) {
 				newScope[arg.name] = arg.type;
 			}
 			return {
 				type: TypeType.Function,
-				returnType: getReturnType(expression.body,newScope),
-				args:expression.args.map(arg => arg.type)
+				returnType: getReturnType(expression.body, newScope),
+				args: expression.args.map((arg) => arg.type),
 			} as Type;
+		}
 	}
 }

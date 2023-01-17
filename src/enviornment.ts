@@ -3,11 +3,11 @@ import {
 	FunctiFunction,
 	FunctionType,
 	NativeFunctionType,
-} from "./function";
-import { Parser } from "./parser";
-import { TypeType } from "./type";
-import { readFileSync, existsSync } from 'fs';
-import { error, Location } from "./error";
+} from "./function.ts";
+import { Parser } from "./parser.ts";
+import { TypeType } from "./type.ts";
+import { error, Location } from "./error.ts";
+import { basename } from "https://deno.land/std@0.172.0/path/mod.ts";
 
 class Enviornment {
 	constructor() {
@@ -49,10 +49,14 @@ class Enviornment {
 	importFile(path:string,location:Location) {
 		if (!this.imported.includes(path)) {
 			this.imported.push(path);
-			if (!existsSync(path)) {
-				error(location,"Cannot find file " + path);
+			let contents = "";
+			try {
+				contents = String.fromCharCode(...Deno.readFileSync(path));				
+			} catch (readErr) {
+				//error(location,`File ${basename(path)} (${path}) not found`);
+				error(location,`Cannot read ${basename(path)} (${path}): ${readErr.toString()}`);
 			}
-			const parser = new Parser(readFileSync(path).toString(),this);
+			const parser = new Parser(contents,this);
 			parser.path = path;
 			parser.parseFile();
 		}

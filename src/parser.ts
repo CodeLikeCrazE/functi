@@ -1,14 +1,17 @@
-import { Enviornment } from "./enviornment";
-import { Expression, ExpressionType } from "./expression";
+import { Enviornment } from "./enviornment.ts";
+import { Expression, ExpressionType } from "./expression.ts";
 import {
 	Argument,
 	FunctiFunction,
 	FunctionType,
 	NativeFunctionType,
-} from "./function";
-import { Type, TypeType } from "./type";
-import { join } from "path";
-import { delayedError as error, Location } from "./error";
+} from "./function.ts";
+import { Type, TypeType } from "./type.ts";
+import { join } from "https://deno.land/std@0.172.0/path/mod.ts";
+import { delayedError as error, Location } from "./error.ts";
+import { fromMeta } from "https://x.nest.land/dirname_deno@0.3.0/mod.ts";
+
+const { __dirname, __filename } = fromMeta(import.meta);
 
 type char = string;
 
@@ -123,10 +126,12 @@ class Parser {
 	// more advanced functions
 
 	parseFile() {
+		this.debugLog(`parsing file`);
 		while (!this.eof()) {
 			this.consumeWhitespace();
 			this.parseChunk();
 		}
+		this.debugLog(`eof`);
 	}
 
 	parseChunk() {
@@ -141,6 +146,7 @@ class Parser {
 				this.parseFunction();
 				break;
 			case "import":
+				{
 				this.debugLog(`importing`);
 				this.consumeWhitespace();
 				const loc = this.getLocation();
@@ -168,6 +174,7 @@ class Parser {
 					);
 				}
 				break;
+				}
 			default:
 				error(
 					this.getLocation(),
@@ -196,12 +203,10 @@ class Parser {
 		}
 		this.seek(2);
 		// we partially declare the function to allow for recursion
-		//@ts-ignore
 		const fn = {
-			type: FunctionType.Custom,
+			type: FunctionType.Partial,
 			name,
 			args,
-			body: null,
 		} as FunctiFunction;
 		if (this.enviornment.functions[fn.name]) {
 			error(this.getLocation(), `Function ${fn.name} already exists`);

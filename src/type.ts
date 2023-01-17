@@ -1,6 +1,6 @@
-import { Argument } from "./function";
+import { Argument } from "./function.ts";
 
-type Type = {
+export type Type = {
 	type: TypeType.String | TypeType.Number | TypeType.Boolean | TypeType.Null | TypeType.Any;
 } | {
 	type: TypeType.Object;
@@ -15,7 +15,7 @@ type Type = {
 };
 
 
-enum TypeType {
+export enum TypeType {
 	Array,
 	Object,
 	String,
@@ -25,5 +25,3 @@ enum TypeType {
 	Any,
 	Function
 }
-
-export { Type, TypeType };

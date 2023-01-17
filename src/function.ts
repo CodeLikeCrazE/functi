@@ -1,6 +1,6 @@
-import { Location } from "./error";
-import { Expression, ExpressionType } from "./expression";
-import { Type, TypeType } from "./type";
+import { Location } from "./error.ts";
+import { Expression, ExpressionType } from "./expression.ts";
+import { Type, TypeType } from "./type.ts";
 
 /*type FunctiFunction = {
 	type: FunctionType;
@@ -9,7 +9,7 @@ import { Type, TypeType } from "./type";
 	body?: Expression;
 }	native: NativeFunctionType;*/
 
-type FunctiFunction = {
+export type FunctiFunction = {
 	name: string;
 	args: Argument[];
 	location: Location;
@@ -22,19 +22,23 @@ type FunctiFunction = {
 			type: FunctionType.Native;
 			native: NativeFunctionType;
 	  }
+	| {
+		type: FunctionType.Partial
+	}
 );
 
-type Argument = {
+export type Argument = {
 	type: Type;
 	name: string;
 };
 
-enum FunctionType {
+export enum FunctionType {
 	Native,
 	Custom,
+	Partial
 }
 
-enum NativeFunctionType {
+export enum NativeFunctionType {
 	Add,
 	Sub,
 	Mul,
@@ -42,5 +46,3 @@ enum NativeFunctionType {
 	Cat,
 	Call
 }
-
-export { FunctiFunction, FunctionType, NativeFunctionType, Argument };

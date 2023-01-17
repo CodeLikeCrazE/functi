@@ -1,5 +1,5 @@
-import { Location } from "./error";
-import { Argument, FunctiFunction } from "./function";
+import { Location } from "./error.ts";
+import { Argument, FunctiFunction } from "./function.ts";
 
 export type Expression = (
 	| {
