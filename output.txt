@@ -1,0 +1,392 @@
+
+C:\Users\Andy\Programming\functi>deno run --allow-all ./src/index.ts 
+⚛ Creating enviornment
+📖 Parsing
+parsing file                            : import 'std@debug'
+import 'std@math'
+import './demoCore.functi'
+
+function hello => print 'Hello World!'
+function anonFunction => print anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+importing                               : 'std@debug'
+import 'std@math'
+import './demoCore.functi'
+
+function hello => print 'Hello World!'
+function anonFunction => print anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+parsing file                            : function print any str => core/cat str
+
+reading function                        : print any str => core/cat str
+
+parsing function argument definition    : any str => core/cat str
+
+reading type annotation                 : any str => core/cat str
+
+reading non array type                  : any str => core/cat str
+
+type is any
+reading function body                   : core/cat str
+
+reading function of type core/cat       : str
+
+parsing arg index 0                     : str
+
+reading function of type str            : 
+eof                                     : 
+importing                               : 'std@math'
+import './demoCore.functi'
+
+function hello => print 'Hello World!'
+function anonFunction => print anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+parsing file                            : function + number a number b => core/add a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading function                        : + number a number b => core/add a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+parsing function argument definition    : number a number b => core/add a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading type annotation                 : number a number b => core/add a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading non array type                  : number a number b => core/add a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+type is number
+parsing function argument definition    : number b => core/add a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading type annotation                 : number b => core/add a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading non array type                  : number b => core/add a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+type is number
+reading function body                   : core/add a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading function of type core/add       : a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+parsing arg index 0                     : a b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading function of type a              : b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+parsing arg index 1                     : b
+function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading function of type b              : function - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading function                        : - number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+parsing function argument definition    : number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading type annotation                 : number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading non array type                  : number a number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+type is number
+parsing function argument definition    : number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading type annotation                 : number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading non array type                  : number b => core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+type is number
+reading function body                   : core/sub a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading function of type core/sub       : a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+parsing arg index 0                     : a b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading function of type a              : b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+parsing arg index 1                     : b
+function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading function of type b              : function * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading function                        : * number a number b => core/mul a b
+function / number a number b => core/div a b
+
+parsing function argument definition    : number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading type annotation                 : number a number b => core/mul a b
+function / number a number b => core/div a b
+
+reading non array type                  : number a number b => core/mul a b
+function / number a number b => core/div a b
+
+type is number
+parsing function argument definition    : number b => core/mul a b
+function / number a number b => core/div a b
+
+reading type annotation                 : number b => core/mul a b
+function / number a number b => core/div a b
+
+reading non array type                  : number b => core/mul a b
+function / number a number b => core/div a b
+
+type is number
+reading function body                   : core/mul a b
+function / number a number b => core/div a b
+
+reading function of type core/mul       : a b
+function / number a number b => core/div a b
+
+parsing arg index 0                     : a b
+function / number a number b => core/div a b
+
+reading function of type a              : b
+function / number a number b => core/div a b
+
+parsing arg index 1                     : b
+function / number a number b => core/div a b
+
+reading function of type b              : function / number a number b => core/div a b
+
+reading function                        : / number a number b => core/div a b
+
+parsing function argument definition    : number a number b => core/div a b
+
+reading type annotation                 : number a number b => core/div a b
+
+reading non array type                  : number a number b => core/div a b
+
+type is number
+parsing function argument definition    : number b => core/div a b
+
+reading type annotation                 : number b => core/div a b
+
+reading non array type                  : number b => core/div a b
+
+type is number
+reading function body                   : core/div a b
+
+reading function of type core/div       : a b
+
+parsing arg index 0                     : a b
+
+reading function of type a              : b
+
+parsing arg index 1                     : b
+
+reading function of type b              : 
+eof                                     : 
+importing                               : './demoCore.functi'
+
+function hello => print 'Hello World!'
+function anonFunction => print anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+parsing file                            : function recursive => recursive
+function test => print / 32 4
+
+reading function                        : recursive => recursive
+function test => print / 32 4
+
+reading function body                   : recursive
+function test => print / 32 4
+
+reading function of type recursive      : function test => print / 32 4
+
+reading function                        : test => print / 32 4
+
+reading function body                   : print / 32 4
+
+reading function of type print          : / 32 4
+
+parsing arg index 0                     : / 32 4
+
+reading function of type /              : 32 4
+
+parsing arg index 0                     : 32 4
+
+reading number                          : 4
+
+parsing arg index 1                     : 4
+
+reading number                          : 
+eof                                     : 
+reading function                        : hello => print 'Hello World!'
+function anonFunction => print anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading function body                   : print 'Hello World!'
+function anonFunction => print anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading function of type print          : 'Hello World!'
+function anonFunction => print anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+parsing arg index 0                     : 'Hello World!'
+function anonFunction => print anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading function                        : anonFunction => print anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading function body                   : print anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading function of type print          : anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+parsing arg index 0                     : anon number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading function of type anon           : number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+parsing function argument definition    : number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading type annotation                 : number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading non array type                  : number n => n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+type is number
+reading function body                   : n
+function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading function of type n              : function callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading function                        : callMeWithAnon anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+parsing function argument definition    : anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading type annotation                 : anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading non array type                  : anon number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+type is anon
+parsing function argument definition    : number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading type annotation                 : number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading non array type                  : number => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+type is number
+reading type annotation                 : => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading non array type                  : => null => print "test"
+function main => callMeWithAnon anon number => print "this shouldnt show"
+
+type is =>
+reading function                        : main => callMeWithAnon anon number => print "this shouldnt show"
+
+reading function body                   : callMeWithAnon anon number => print "this shouldnt show"
+
+reading function of type callMeWithAnon : anon number => print "this shouldnt show"
+
+eof                                     : 
+
+[1;1H[0JCOMPILATION EXITED WITH ERRORS
+
+[31;1m(demo.functi/7:38)[0m: Unexpected type =>
+[31;1m(demo.functi/7:47)[0m: Unexpected top level declaration =>
+[31;1m(demo.functi/7:53)[0m: Unexpected top level declaration print
+[31;1m(demo.functi/8:0)[0m: Unexpected top level declaration "test"
+[31;1m(demo.functi/8:17)[0m: callMeWithAnon is not a function nor is it defined in the current scope
+[31;1m(demo.functi/8:37)[0m: Unexpected top level declaration anon
+[31;1m(demo.functi/8:44)[0m: Unexpected top level declaration number
+[31;1m(demo.functi/8:47)[0m: Unexpected top level declaration =>
+[31;1m(demo.functi/8:53)[0m: Unexpected top level declaration print
+[31;1m(demo.functi/8:59)[0m: Unexpected top level declaration "this
+[31;1m(demo.functi/8:68)[0m: Unexpected top level declaration shouldnt
+[31;1m(demo.functi/9:0)[0m: Unexpected top level declaration show"
+
+C:\Users\Andy\Programming\functi>node ./src/output.js 
+[Function (anonymous)]

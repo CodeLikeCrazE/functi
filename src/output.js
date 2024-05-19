@@ -1,1 +1,1 @@
-function anonFunction$o(){ return print$d(function (n){ returnn})}function print$d(str){ return corecat$e(str)}function corecat$e($str){console.log($str)}function main$v(){ return anonFunction$o()}main$v()
+function anonFunction$v(){ return print$h(function (n){ returnn})}function print$h(str){ return corecat$f(str)}function corecat$f($str){console.log($str)}function main$e(){ return anonFunction$v()}main$e()

@@ -29,6 +29,8 @@ class Parser {
 	path?: string;
 
 	enviornment: Enviornment;
+	abortParsingFunctionArguments=false;
+	
 	debugLogHook = (text: string) => {
 		console.log(text);
 	};
@@ -110,12 +112,11 @@ class Parser {
 	}
 
 	debugLog(text: string) {
-		return;
 		this.consumeWhitespace();
 		console.log(
 			`${text}${" ".repeat(40 - text.length)}: ${this.code.slice(
 				this.index
-			)}`
+			)/*.split("\n")[0]*/}`
 		);
 	}
 
@@ -196,10 +197,14 @@ class Parser {
 		const args: Argument[] = [];
 		this.consumeWhitespace();
 		const loc = this.getLocation();
-		while (this.peek(2) != "=>") {
+		while (this.peek(2) != "=>" && !this.abortParsingFunctionArguments) {
 			this.debugLog(`parsing function argument definition`);
 			args.push(this.parseArgument());
 			this.consumeWhitespace();
+		}
+		if (this.abortParsingFunctionArguments) {
+			this.abortParsingFunctionArguments = false;
+			return;
 		}
 		this.seek(2);
 		// we partially declare the function to allow for recursion
@@ -359,6 +364,7 @@ class Parser {
 	parseType(): Type {
 		this.debugLog(`reading type annotation`);
 		if (this.peek(1) == "[") {
+			this.debugLog(`reading array`);
 			this.seek(1);
 			this.consumeWhitespace();
 			const out: {
@@ -374,7 +380,9 @@ class Parser {
 			}
 			return out;
 		}
+		this.debugLog(`reading non array type`);
 		const type = this.readToken();
+		this.debugLogHook(`type is ${type}`);
 		switch (type) {
 			case "number":
 				return {
@@ -396,7 +404,27 @@ class Parser {
 				return {
 					type: TypeType.Any,
 				};
+			case "anon":
+				{
+					const args: Type[] = [];
+					this.consumeWhitespace();
+					while (this.peek(2) != "=>") {
+						this.debugLog(`parsing anonymous function typedef arg`);
+						args.push(this.parseType());
+						this.consumeWhitespace();
+					}
+					this.seek(2);
+					this.consumeWhitespace();
+					this.debugLog(`parsing anon func type return type`);
+					const returnType = this.parseType();
+					return {
+						type: TypeType.Function,
+						args,
+						returnType
+					}
+				}
 			default:
+				this.abortParsingFunctionArguments = true;
 				error(this.getLocation(), "Unexpected type " + type);
 				return {
 					type: TypeType.Null,
